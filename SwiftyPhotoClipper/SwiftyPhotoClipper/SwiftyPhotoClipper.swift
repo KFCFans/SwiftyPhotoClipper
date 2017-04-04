@@ -67,6 +67,13 @@ class SwiftyPhotoClipper: UIViewController {
         imgView = UIImageView(image: image)
     }
     
+    /// 设置裁切区域
+    func setClipSize(width:CGFloat,height:CGFloat){
+        
+        self.selectHeight = height
+        self.selectWidth = width
+    }
+    
     
     
 }

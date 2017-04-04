@@ -84,8 +84,6 @@ extension ViewController:UIImagePickerControllerDelegate,UINavigationControllerD
         } else{
             print("Something went wrong")
         }
-        
-        
     }
     
     func didFinishClippingPhoto(image: UIImage) {
