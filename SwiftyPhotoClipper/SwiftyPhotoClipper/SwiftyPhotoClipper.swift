@@ -44,6 +44,9 @@ class SwiftyPhotoClipper: UIViewController {
     var selectWidth:CGFloat = UIScreen.main.bounds.width
     var selectHeight:CGFloat = 200.0
     
+    // 框框线的宽度
+    let lineWidth:CGFloat = 1.0
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -154,7 +157,7 @@ extension SwiftyPhotoClipper{
         
         // 截全屏
         guard let img = UIGraphicsGetImageFromCurrentImageContext()?.cgImage,
-            let result = img.cropping(to: CGRect(x: 0, y: (HEIGHT - selectHeight)/2 * scal, width: self.WIDTH * scal, height: selectHeight * scal))   else{
+            let result = img.cropping(to: CGRect(x: scal * lineWidth, y: (HEIGHT - selectHeight)/2 * scal, width: (self.WIDTH - 2*lineWidth) * scal, height: selectHeight * scal))   else{
                 return nil
         }
         // 关闭上下文
@@ -178,6 +181,13 @@ extension SwiftyPhotoClipper{
         context?.addRect(CGRect(x: 0, y: (HEIGHT - selectHeight)/2, width: WIDTH , height: selectHeight))
         context?.setBlendMode(.clear)
         context?.fillPath()
+        
+        // 绘制框框
+        context?.setBlendMode(.color)
+        context?.setStrokeColor(UIColor.white.cgColor)
+        context?.setLineWidth(1.0)
+        context?.stroke(CGRect(x: 0, y: (HEIGHT - selectHeight)/2 - lineWidth , width: WIDTH , height: selectHeight + 2*lineWidth))
+        context?.strokePath()
         
         
         let img = UIGraphicsGetImageFromCurrentImageContext()
