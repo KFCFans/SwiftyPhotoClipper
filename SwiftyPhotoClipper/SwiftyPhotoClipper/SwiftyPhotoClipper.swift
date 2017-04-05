@@ -107,6 +107,16 @@ extension SwiftyPhotoClipper{
         view.addSubview(scrollview)
         scrollview.addSubview(imgView)
         
+        let topInsert = (imgView.frame.size.height - selectHeight)/2
+        let bottomInsert = (HEIGHT - imgView.frame.size.height)/2
+        
+        scrollview.contentSize = CGSize(width: WIDTH, height: HEIGHT + imgView.frame.height / 2)
+        scrollview.contentInset = UIEdgeInsets(top: topInsert, left: 0, bottom: -bottomInsert, right: 0)
+        
+        // 隐藏导航条
+        scrollview.showsHorizontalScrollIndicator = false
+        scrollview.showsVerticalScrollIndicator = false
+        
         // 设置缩放属性
         scrollview.maximumZoomScale = maxScale
         scrollview.minimumZoomScale = minScale
@@ -194,6 +204,14 @@ extension SwiftyPhotoClipper:UIScrollViewDelegate{
         centerY = scrollView.contentSize.height > scrollView.frame.size.height ?scrollView.contentSize.height / 2 : centerY
         self.imgView?.center = CGPoint(x: centerX, y: centerY)
         
+        guard let imgView = imgView else {
+            return
+        }
+        
+        let topInsert = (imgView.frame.size.height - selectHeight)/2
+        let bottomInsert = (HEIGHT - imgView.frame.size.height)/2
+        scrollview.contentSize = CGSize(width: imgView.frame.width, height: HEIGHT + imgView.frame.height / 2)
+        scrollview.contentInset = UIEdgeInsets(top: topInsert, left: 0, bottom: -bottomInsert, right: 0)
         
     }
     
